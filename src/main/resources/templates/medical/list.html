@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="ja"> 
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>医療費一覧</title>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container">
 <h1 class="mt-4">医療費一覧</h1>
 
 <!-- 操作に応じたメッセージを表示:start -->
-<div class="alert alert-success mt-4">
-	医療費を追加しました等、操作に応じたメッセージ
+<div th:if="${statusMessage}" class="alert alert-success mt-4">
+	[[${statusMessage}]]
 </div>
 <!-- 操作に応じたメッセージを表示:end -->
 
 <p>
-	<a class="mt-4 btn btn-primary" href="save.html">受診データの追加</a>
-	<a class="mt-4 btn btn-primary" href="period.html">期間設定</a>
-	<a class="mt-4 btn btn-primary" href="total.html">明細表</a>
-	<a class="mt-4 btn btn-primary" href="../members/list.html">受診者一覧</a>
+	<a class="mt-4 btn btn-primary" th:href="@{/medical/add}">受診データの追加</a>
+	<a class="mt-4 btn btn-primary" th:href="@{/members/list}">受診者一覧</a>
 	<a class="mt-4 btn btn-primary" href="../payees/list.html">支払先医療機関一覧</a>
 	<a class="mt-4 btn btn-primary" href="../payees/list.html">利用交通区間一覧</a>
+	<a class="mt-4 btn btn-primary" href="period.html">期間設定</a>
+	<a class="mt-4 btn btn-primary" href="total.html">明細表</a>
 </p>
 <table class="table">
 	<tr>
@@ -33,6 +33,13 @@
 		<th>金額</th>
 		<th>摘要</th>
 		<th colspan="2">操作</th>
+	</tr>
+	<tr th:each="receipt : ${medical}">
+		<td>[[${receipt.id}]]</td>
+		<td>[[${receipt.name}]]</td>
+		<td>[[${receipt.target}]]</td>
+		<td><a class="btn btn-primary" th:href="@{/medical/edit/{id}(id=${receipt.id})}">編集</a></td>
+		<td><a class="btn btn-danger delete" th:href="@{/medical/delete/{id}(id=${receipt.id})}" data-toggle="modal" data-target="#confirm-modal" th:data-name="${receipt.id}">削除</a></td>
 	</tr>
 	<tr>
 		<td>1</td>
@@ -114,7 +121,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirm-modal">会員情報の削除</h5>
+        <h5 class="modal-title" id="confirm-modal">医療費情報の削除</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
