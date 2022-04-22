@@ -40,7 +40,9 @@ public class MemberController {
 	@GetMapping("/add")
 	public String addGet(Model model) throws Exception {
 		model.addAttribute("title", "受診者名の追加");
-		model.addAttribute("member", new Member());
+		Member member = new Member();
+		member.setTarget(1);
+		model.addAttribute("member", member);
 		return "members/save";
 	}
 
@@ -71,7 +73,9 @@ public class MemberController {
 			@Valid Member member,
 			Errors errors,
 			Model model) throws Exception {
+		System.out.println("MemberController::editPost() start.");
 		if(errors.hasErrors()) {
+			System.out.println("MemberController::editPost() hasErrors!.");
 			model.addAttribute("title", "受診者情報の変更");
 			return "members/save";
 		}
