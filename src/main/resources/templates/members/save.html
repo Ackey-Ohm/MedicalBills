@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>[[${title}]]</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+<h1 class="my-4">会員の追加／編集</h1>
+<form action="" method="post">
+	<span class="error">氏名に関するエラーメッセージ</span>
+	<p class="mt-2">氏名：<input type="text" name="name"></p>
+
+	<span class="error">年齢に関するエラーメッセージ</span>
+	<p class="mt-2">年齢：<input type="text" name="age"></p>
+
+	<span class="error">住所に関するエラーメッセージ</span>
+	<p class="mt-2">住所：<input type="text" name="address"></p>
+
+	<p class="mt-2">会員種別：
+		<select name="typeId">
+			<option value="1">通常会員</option>
+			<option value="2">プレミアム会員</option>
+		</select>
+	</p>
+
+	<input class="btn btn-primary" type="submit">
+</form>
+<p class="mt-4"><a href="list.html">一覧に戻る</a></p>
+
+<h1 class="mt-4">[[${title}]]</h1>
+<form action="" method="post" th:object="${member}">
+	<span th:errors="*{name}" class="error"></span>
+	<p class="mt-2">なまえ：<input type="text" th:field="*{name}"></p>
+
+	<span th:errors="*{target}" class="error"></span>
+
+	<p class="mt-2">状態</p>
+	<div class="radio-inline">
+	 	<input type="radio" th:text="対象外" th:value="0" th:field="*{target}">
+	 	<input type="radio" th:text="対象" th:value="1" th:field="*{target}">
+	</div>
+
+	<input class="btn btn-primary" type="submit">
+</form>
+<p class="mt-4"><a th:href="@{/members}">一覧に戻る</a></p>
+
+</div>
+</body>
+</html>

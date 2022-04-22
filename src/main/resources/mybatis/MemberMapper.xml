@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MemberDao">
+
+	<select id="selectAll" resultType="com.example.demo.domain.Member">
+		SELECT
+			members.id, members.name, members.target
+		FROM members
+	</select>
+
+	<select id="selectById" parameterType="int"
+		resultType="com.example.demo.domain.Member">
+		SELECT
+			members.id, members.name,members.target
+		FROM members
+		WHERE members.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.demo.domain.Member"
+		useGeneratedKeys="true">
+		INSERT
+		INTO members (name, target)
+		VALUES (#{name}, #{target})
+	</insert>
+
+	<update id="update" parameterType="com.example.demo.domain.Member">
+		UPDATE members
+		SET name = #{name}, target = #{target}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM members
+		WHERE id = #{id}
+	</delete>
+
+	<select id="count" resultType="long">
+		SELECT COUNT(*)
+		FROM members
+	</select>
+
+	<select id="selectLimited" resultType="com.example.demo.domain.Member">
+		SELECT
+			members.id, members.name,members.target
+		FROM members
+		LIMIT #{offset}, #{num}
+	</select>
+
+</mapper>
