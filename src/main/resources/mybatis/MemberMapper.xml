@@ -8,6 +8,12 @@
 		FROM members
 	</select>
 
+	<select id="selectIdAll" resultType="int">
+		SELECT
+			members.id
+		FROM members
+	</select>
+
 	<select id="selectById" parameterType="int"
 		resultType="com.example.demo.domain.Member">
 		SELECT

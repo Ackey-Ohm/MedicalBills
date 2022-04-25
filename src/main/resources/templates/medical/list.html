@@ -36,8 +36,14 @@
 	</tr>
 	<tr th:each="receipt : ${medical}">
 		<td>[[${receipt.id}]]</td>
-		<td>[[${receipt.name}]]</td>
-		<td>[[${receipt.target}]]</td>
+		<td>[[${receipt.dateUse}]]</td>
+		<td th:if="${#strings.isEmpty(receipt.memberName)}">([[${receipt.member}]])</td>
+		<td th:unless="${#strings.isEmpty(receipt.memberName)}">[[${receipt.memberName}]]</td>
+		<td th:if="${#strings.isEmpty(receipt.payeeName)}">([[${receipt.payee}]])</td>
+		<td th:unless="${#strings.isEmpty(receipt.payeeName)}">[[${receipt.payeeName}]]</td>
+		<td>[[${receipt.classAll}]]</td>
+		<td>[[${receipt.amount}]]</td>
+		<td>[[${#strings.toString(receipt.description)}]]</td>
 		<td><a class="btn btn-primary" th:href="@{/medical/edit/{id}(id=${receipt.id})}">編集</a></td>
 		<td><a class="btn btn-danger delete" th:href="@{/medical/delete/{id}(id=${receipt.id})}" data-toggle="modal" data-target="#confirm-modal" th:data-name="${receipt.id}">削除</a></td>
 	</tr>

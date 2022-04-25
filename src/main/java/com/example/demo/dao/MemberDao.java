@@ -11,6 +11,7 @@ import com.example.demo.domain.Member;
 public interface MemberDao {
 
 	List<Member> selectAll() throws Exception;
+	List<Integer> selectIdAll() throws Exception;
 	Member selectById(Integer id) throws Exception;
 	void insert(Member member) throws Exception;
 	void update(Member member) throws Exception;
