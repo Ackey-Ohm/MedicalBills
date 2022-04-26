@@ -7,6 +7,7 @@ import com.example.demo.domain.Member;
 public interface MemberService {
 
 	List<Member> getMemberList() throws Exception;
+	List<Integer> getIdList() throws Exception;
 	Member getMemberById(Integer id) throws Exception;
 	void addMember(Member member) throws Exception;
 	void editMember(Member member) throws Exception;

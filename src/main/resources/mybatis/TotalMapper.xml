@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.TotalDao">
+
+	<select id="totalByName" resultType="com.example.demo.domain.Total">
+		SELECT
+			receipts.member as member,
+		    members.name as memberName,
+    		payees.name as payeeName,
+	    	sum(receipts.amount) as amount,
+			sum(receipts.class1) as class1,
+			sum(receipts.class2) as class2,
+			sum(receipts.class3) as class3,
+			sum(receipts.class4) as class4
+		FROM receipts
+		JOIN members
+			ON receipts.member = members.id
+		JOIN payees
+			ON receipts.payee = payees.id
+		WHERE receipts.member=#{name} and receipts.payee=#{payee}
+
+	</select>
+
+</mapper>

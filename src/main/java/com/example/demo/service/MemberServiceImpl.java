@@ -22,6 +22,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public List<Integer> getIdList() throws Exception {
+		return memberDao.selectIdAll();
+	}
+
+	@Override
 	public Member getMemberById(Integer id) throws Exception {
 		return memberDao.selectById(id);
 	}
@@ -53,4 +58,5 @@ public class MemberServiceImpl implements MemberService {
 		int offset = numPerPage * (page - 1);
 		return memberDao.selectLimited(offset, numPerPage);
 	}
+
 }

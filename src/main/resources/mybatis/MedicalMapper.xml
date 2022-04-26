@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.MedicalDao">
+
+	<select id="selectAll" resultType="com.example.demo.domain.Medical">
+		SELECT
+			receipts.id, receipts.member, receipts.payee, receipts.amount
+			, receipts.date_use, receipts.item_type
+			, receipts.class1, receipts.class2, receipts.class3, receipts.class4
+			, receipts.description
+		FROM receipts
+	</select>
+
+	<select id="selectById" parameterType="int"
+		resultType="com.example.demo.domain.Medical">
+		SELECT
+			receipts.id, receipts.member, receipts.payee, receipts.amount
+			, receipts.date_use, receipts.item_type
+			, receipts.class1, receipts.class2, receipts.class3, receipts.class4
+			, receipts.description
+		FROM receipts
+		WHERE receipts.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.demo.domain.Medical"
+		useGeneratedKeys="true">
+		INSERT
+		INTO receipts
+			(member, payee, amount, date_use, item_type
+			, class1, class2, class3, class4, description)
+		VALUES
+			(#{member}, #{payee}, #{amount}, #{dateUse}, #{itemType}
+			, #{class1}, #{class2}, #{class3}, #{class4}, #{description})
+	</insert>
+
+	<update id="update" parameterType="com.example.demo.domain.Medical">
+		UPDATE receipts
+		SET
+			member = #{member}, payee = #{payee}, amount = #{amount}
+			, date_use = #{dateUse}, item_type = #{itemType}
+			, class1 = #{class1}, class2 = #{class2}, class3 = #{class3}
+			, class4 = #{class4}, description = #{description}
+
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM receipts
+		WHERE id = #{id}
+	</delete>
+
+	<select id="count" resultType="long">
+		SELECT COUNT(*)
+		FROM receipts
+	</select>
+
+	<select id="selectLimited" resultType="com.example.demo.domain.Medical">
+		SELECT
+			receipts.id, receipts.member, receipts.payee, receipts.amount
+			, receipts.date_use, receipts.item_type
+			, receipts.class1, receipts.class2, receipts.class3, receipts.class4
+			, receipts.description
+		FROM receipts
+		LIMIT #{offset}, #{num}
+	</select>
+
+</mapper>
