@@ -9,6 +9,6 @@ import com.example.demo.domain.Total;
 public interface TotalDao {
 	Total totalByName(@Param("name") Integer name
 					, @Param("payee") Integer payee
-					, @Param("itemType") Integer itemType) throws Exception;
+					) throws Exception;
 
 }

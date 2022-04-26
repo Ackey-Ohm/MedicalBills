@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PayeeDao">
+
+	<select id="selectAll" resultType="com.example.demo.domain.Payee">
+		SELECT
+			payees.id
+			, payees.name
+			, payees.item_type
+			, payees.relation
+			, payees.description
+		FROM payees
+	</select>
+
+	<select id="selectIdAll" resultType="int">
+		SELECT
+			payees.id
+		FROM payees
+	</select>
+
+	<select id="selectById" parameterType="int"
+		resultType="com.example.demo.domain.Payee">
+		SELECT
+			payees.id
+			, payees.name
+			, payees.item_type
+			, payees.relation
+			, payees.description
+		FROM payees
+		WHERE payees.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.example.demo.domain.Payee"
+		useGeneratedKeys="true">
+		INSERT
+		INTO payees (name, item_type, relation, description)
+		VALUES (#{name}, #{itemType}, #{relation}, #{description})
+	</insert>
+
+	<update id="update" parameterType="com.example.demo.domain.Payee">
+		UPDATE payees
+		SET
+			name = #{name}
+			, item_type = #{itemType}
+			, relation = #{relation}
+			, description = #{description}
+		WHERE id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM payees
+		WHERE id = #{id}
+	</delete>
+
+	<select id="count" resultType="long">
+		SELECT COUNT(*)
+		FROM payees
+	</select>
+
+	<select id="selectLimited" resultType="com.example.demo.domain.Payee">
+		SELECT
+			payees.id
+			, payees.name
+			, payees.item_type
+			, payees.relation
+			, payees.description
+		FROM payees
+		LIMIT #{offset}, #{num}
+	</select>
+
+</mapper>

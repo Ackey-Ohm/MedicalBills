@@ -9,7 +9,7 @@ import com.example.demo.domain.Total;
 @Service
 public interface TotalService {
 
-	Total getTotalById(Integer id, Integer payee, Integer itemType) throws Exception;
+	Total getTotalById(Integer id, Integer payee) throws Exception;
 
 	List<Total> getTotalAll() throws Exception;
 
