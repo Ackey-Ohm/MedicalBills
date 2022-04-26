@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 import com.example.demo.domain.Payee;
 @Service
 public interface PayeeService {
-	List<Payee> getMemberList() throws Exception;
-	Payee getMemberById(Integer id) throws Exception;
-	void addMember(Payee payee) throws Exception;
-	void editMember(Payee payee) throws Exception;
-	void deleteMember(Integer id) throws Exception;
+	List<Payee> getPayeeList() throws Exception;
+	Payee getPayeeById(Integer id) throws Exception;
+	void addPayee(Payee payee) throws Exception;
+	void editPayee(Payee payee) throws Exception;
+	void deletePayee(Integer id) throws Exception;
 
 	// ページ分割機能用
 	int getTotalPages(int numPerPage) throws Exception;
-	List<Payee> getMemberListByPage(int page, int numPerPage) throws Exception;
+	List<Payee> getPayeeListByPage(int page, int numPerPage) throws Exception;
 
 }

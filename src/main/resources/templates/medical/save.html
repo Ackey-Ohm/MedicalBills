@@ -1,34 +1,56 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>受診データの追加／編集</title>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
-<link rel="stylesheet" href="../css/style.css">
+<title>[[${title}]]</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div class="container">
-<h1 class="my-4">受診の追加／編集</h1>
-<form action="" method="post">
-	<span class="error">氏名に関するエラーメッセージ</span>
-	<p class="mt-2">氏名：<input type="text" name="name"></p>
-
-	<span class="error">年齢に関するエラーメッセージ</span>
-	<p class="mt-2">年齢：<input type="text" name="age"></p>
-
-	<span class="error">住所に関するエラーメッセージ</span>
-	<p class="mt-2">住所：<input type="text" name="address"></p>
-
-	<p class="mt-2">会員種別：
-		<select name="typeId">
-			<option value="1">通常会員</option>
-			<option value="2">プレミアム会員</option>
+<h1 class="my-4">[[${title}]]</h1>
+<form action="" method="post" th:object="${medical}">
+<!--
+	<span th:errors="*{name}" class="error"></span>
+ -->
+ 	<p class="mt-2">受診者名：
+		<select th:field="*{member}">
+			<option th:each="member : ${memberList}" th:value="${member.id}" th:text="${member.name}"></option>
+		</select>
+	</p>
+<!--
+	<span th:errors="*{payee}" class="error"></span>
+ -->
+	<p class="mt-2">支払先：
+		<select th:field="*{payee}">
+			<option th:each="payee : ${payeeList}" th:value="${payee.id}" th:text="${payee.name}"></option>
 		</select>
 	</p>
 
+<!--
+	<span th:errors="*{amount}" class="error"></span>
+ -->
+	<p class="mt-2">金額：<input type="number" th:field="*{amount}"></p>
+
+	<div class="form-group">
+		<p class="mt-2  form-check-inline">区分：
+			<input type="radio" class="form-check-input" th:text="医療費" th:value="1" th:field="*{itemType}">
+			<input type="radio" class="form-check-input" th:text="交通費" th:value="2" th:field="*{itemType}" >
+		</p>
+	</div>
+
+	<div class="form-group">
+		<p class="mt-2  form-check-inline">詳細：
+ 			<input type="checkbox" class="form-check-input" th:text="診察、診療" th:value="1" th:field="*{class1}">
+ 			<input type="checkbox" class="form-check-input" th:text="医薬品購入" th:value="1" th:field="*{class2}">
+ 			<input type="checkbox" class="form-check-input" th:text="介護サービス" th:value="1" th:field="*{class3}">
+ 			<input type="checkbox" class="form-check-input" th:text="その他" th:value="1" th:field="*{class4}">
+ 		</p>
+	</div>
+
 	<input class="btn btn-primary" type="submit">
 </form>
-<p class="mt-4"><a href="list.html">一覧に戻る</a></p>
+<p class="mt-4"><a th:href="@{/members}">一覧に戻る</a></p>
 </div>
 </body>
 </html>
