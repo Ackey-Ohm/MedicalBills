@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja"> 
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>医療費明細表</title>
-<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container">
@@ -16,7 +16,7 @@
 <!-- 操作に応じたメッセージを表示:end -->
 
 <p>
-	<a class="mt-4 btn btn-primary" href="list.html">受診一覧に戻る</a>
+    <a class="mt-4 btn btn-primary" th:href="@{/medical}">医療費一覧に戻る</a>
 </p>
 <table class="table">
 	<tr>
@@ -26,6 +26,14 @@
 		<th>（３）医療費の区分</th>
 		<th>金額</th>
 	</tr>
+    <tr th:each="total : ${totalList}">
+        <td>[[${total.id}]]</td>
+        <td>[[${total.memberName}]]</td>
+        <td>[[${total.payeeName}]]</td>
+        <td>[[${total.classAll}]]</td>
+        <td>[[${total.amount}]]</td>
+    </tr>
+<!--
 	<tr>
 		<td>1</td>
 		<td>バカボンのパパ</td>
@@ -97,7 +105,7 @@
 		<td>医薬品購入</td>
 		<td>6,000</td>
 	</tr>
-</table>
+  --></table>
 <table class="table" border="1">
 	<tr>
 		<th>開始日付</th>

@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.MedicalDao;
+import com.example.demo.dao.MemberDao;
+import com.example.demo.dao.PayeeDao;
 import com.example.demo.domain.Medical;
 @Service
 public class MedicalServiceImpl implements MedicalService {
 
 	@Autowired
 	MedicalDao medicalDao;
+	@Autowired
+	MemberDao memberDao;
+	@Autowired
+	PayeeDao payeeDao;
 
 	@Override
 	public List<Medical> getMedicalList() throws Exception {
@@ -32,16 +38,16 @@ public class MedicalServiceImpl implements MedicalService {
 					+ "\tdescription: " + medical.getDescription()
 					);
 
-			medical.setMemberName("未実装");
-			medical.setPayeeName("未実装");
+			medical.setMemberName(memberDao.selectById(medical.getMember()).getName());
+			medical.setPayeeName(payeeDao.selectById(medical.getPayee()).getName());
 			String classString = "";
 			if (medical.getItemType() == 2 ) {
 				classString = "その他（交通費）";
 			} else {
-				classString += (medical.getClass1() == 1) ? "医療費 " : "";
-				classString += (medical.getClass2() == 1) ? "医薬品 " : "";
-				classString += (medical.getClass3() == 1) ? "介護サ " : "";
-				classString += (medical.getClass4() == 1) ? "その他" : "";
+				classString += (medical.getClass1() != null && medical.getClass1() == 1) ? "医療費 " : "";
+				classString += (medical.getClass2() != null && medical.getClass2() == 1) ? "医薬品 " : "";
+				classString += (medical.getClass3() != null && medical.getClass3() == 1) ? "介護サ " : "";
+				classString += (medical.getClass4() != null && medical.getClass4() == 1) ? "その他" : "";
 			}
 			medical.setClassAll(classString);
 			if (medical.getDescription() == null) {medical.setDescription("－");};
@@ -96,16 +102,16 @@ public class MedicalServiceImpl implements MedicalService {
 					+ "\n\tdescription: " + medical.getDescription()
 					);
 
-//			medical.setMemberName("未実装");
-//			medical.setPayeeName("未実装");
+			medical.setMemberName(memberDao.selectById(medical.getMember()).getName());
+			medical.setPayeeName(payeeDao.selectById(medical.getPayee()).getName());
 			String classString = "";
 			if (medical.getItemType() == 2 ) {
 				classString = "その他（交通費）";
 			} else {
-				classString += (medical.getClass1() == 1) ? "医療費 " : "";
-				classString += (medical.getClass2() == 1) ? "医薬品 " : "";
-				classString += (medical.getClass3() == 1) ? "介護サ " : "";
-				classString += (medical.getClass4() == 1) ? "その他" : "";
+				classString += (medical.getClass1() != null && medical.getClass1() == 1) ? "医療費 " : "";
+				classString += (medical.getClass2() != null && medical.getClass2() == 1) ? "医薬品 " : "";
+				classString += (medical.getClass3() != null && medical.getClass3() == 1) ? "介護サ " : "";
+				classString += (medical.getClass4() != null && medical.getClass4() == 1) ? "その他" : "";
 			}
 			medical.setClassAll(classString);
 //			if (medical.getDescription() == null) {medical.setDescription("－");};

@@ -13,11 +13,16 @@
 <!--
 	<span th:errors="*{name}" class="error"></span>
  -->
- 	<p class="mt-2">受診者名：
-		<select th:field="*{member}">
-			<option th:each="member : ${memberList}" th:value="${member.id}" th:text="${member.name}"></option>
-		</select>
-	</p>
+    <p class="mt-2">日付：<input type="text" th:field="*{dateUse}"></p>
+<!--
+    <span th:errors="*{name}" class="error"></span>
+ -->
+    <p class="mt-2">受診者名：
+        <select th:field="*{member}">
+            <option th:each="member : ${memberList}" th:value="${member.id}" th:text="${member.name}"></option>
+        </select>
+    </p>
+<!--
 <!--
 	<span th:errors="*{payee}" class="error"></span>
  -->
@@ -33,20 +38,25 @@
 	<p class="mt-2">金額：<input type="number" th:field="*{amount}"></p>
 
 	<div class="form-group">
-		<p class="mt-2  form-check-inline">区分：
-			<input type="radio" class="form-check-input" th:text="医療費" th:value="1" th:field="*{itemType}">
-			<input type="radio" class="form-check-input" th:text="交通費" th:value="2" th:field="*{itemType}" >
+		<p class="mt-1 form-check-inline">区分：
+			<input type="radio" class="form-check-input" th:text="医療費" th:value="0" th:field="*{itemType}">
+			<input type="radio" class="form-check-input" th:text="交通費" th:value="1" th:field="*{itemType}" >
 		</p>
 	</div>
 
 	<div class="form-group">
-		<p class="mt-2  form-check-inline">詳細：
- 			<input type="checkbox" class="form-check-input" th:text="診察、診療" th:value="1" th:field="*{class1}">
- 			<input type="checkbox" class="form-check-input" th:text="医薬品購入" th:value="1" th:field="*{class2}">
- 			<input type="checkbox" class="form-check-input" th:text="介護サービス" th:value="1" th:field="*{class3}">
- 			<input type="checkbox" class="form-check-input" th:text="その他" th:value="1" th:field="*{class4}">
+		<p class="mt-1 form-check-inline">詳細：
+ 			<input type="checkbox" class="mx-2 form-check-input" th:text="診察、診療" th:value="1" th:field="*{class1}">
+ 			<input type="checkbox" class="mx-2 form-check-input" th:text="医薬品購入" th:value="1" th:field="*{class2}">
+ 			<input type="checkbox" class="mx-2 form-check-input" th:text="介護サービス" th:value="1" th:field="*{class3}">
+ 			<input type="checkbox" class="mx-2 form-check-input" th:text="その他" th:value="1" th:field="*{class4}">
  		</p>
 	</div>
+
+    <p class="mt-1">適用：<br>
+        <textarea th:field="*{description}" cols="40" rows="3"></textarea>
+    </p>
+
 
 	<input class="btn btn-primary" type="submit">
 </form>

@@ -43,7 +43,8 @@ public class MedicalController {
 			@RequestParam(name = "status", required = false) String status,
 			Model model) throws Exception {
 		System.out.println("MedicalController::list() start.");
-		model.addAttribute("medical", medicalService.getMedicalListByPage(page, NUM_PER_PAGE));
+//		model.addAttribute("medical", medicalService.getMedicalListByPage(page, NUM_PER_PAGE));
+		model.addAttribute("medical", medicalService.getMedicalList());
 		model.addAttribute("page", page);
 		model.addAttribute("totalPages", medicalService.getTotalPages(NUM_PER_PAGE));
 		model.addAttribute("statusMessage", getStatusMessage(status));
@@ -57,6 +58,11 @@ public class MedicalController {
 		List<Payee> payeeList = payeeService.getPayeeList();
 		Medical medical = new Medical();
 		medical.setAmount(0);
+		medical.setItemType(0);
+		medical.setClass1(0);
+		medical.setClass2(0);
+		medical.setClass3(0);
+		medical.setClass4(0);
 		model.addAttribute("title", "医療費の追加");
 		model.addAttribute("medical", medical);
 		model.addAttribute("memberList", memberList);
@@ -72,11 +78,23 @@ public class MedicalController {
 		System.out.println("MedicalController::addPost() start.");
 		if(errors.hasErrors()) {
 			System.out.println("MedicalController::hasErrors(): " + errors.toString());
+			List<Member> memberList = memberService.getMemberList();
+			List<Payee> payeeList = payeeService.getPayeeList();
+			medical.setAmount(0);
+			medical.setItemType(1);
+			medical.setClass1(0);
+			medical.setClass2(0);
+			medical.setClass3(0);
+			medical.setClass4(0);
 			model.addAttribute("title", "医療費の追加");
+			model.addAttribute("medical", medical);
+			model.addAttribute("memberList", memberList);
+			model.addAttribute("payeeList", payeeList);
 			return "medical/save";
 		}
 
 		medicalService.addMedical(medical);
+		System.out.println("MedicalController::addPost() done. ");
 		return "redirect:/medical?status=add";
 	}
 
