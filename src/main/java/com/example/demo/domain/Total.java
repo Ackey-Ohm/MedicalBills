@@ -19,6 +19,6 @@ public class Total {
 	private Integer class4;		// 1:その他
 	private String classAll;	// 区分文字列 交通費 : 診療／医薬品／介護サ／その他
 
-	private Integer amount;		// 支払金額合計
+	private int amount;		// 支払金額合計
 
 }
