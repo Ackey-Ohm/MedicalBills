@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.domain.Medical;
+import com.example.demo.domain.Member;
+import com.example.demo.domain.Payee;
 import com.example.demo.service.MedicalService;
+import com.example.demo.service.MemberService;
+import com.example.demo.service.PayeeService;
 
 @Controller
 @RequestMapping("/medical")
@@ -25,7 +31,11 @@ public class MedicalController {
 	private static final int NUM_PER_PAGE = 5;
 
 	@Autowired
-	MedicalService service;
+	MedicalService medicalService;
+	@Autowired
+	MemberService memberService;
+	@Autowired
+	PayeeService payeeService;
 
 	@GetMapping
 	public String list(
@@ -33,9 +43,10 @@ public class MedicalController {
 			@RequestParam(name = "status", required = false) String status,
 			Model model) throws Exception {
 		System.out.println("MedicalController::list() start.");
-		model.addAttribute("medical", service.getMedicalListByPage(page, NUM_PER_PAGE));
+//		model.addAttribute("medical", medicalService.getMedicalListByPage(page, NUM_PER_PAGE));
+		model.addAttribute("medical", medicalService.getMedicalList());
 		model.addAttribute("page", page);
-		model.addAttribute("totalPages", service.getTotalPages(NUM_PER_PAGE));
+		model.addAttribute("totalPages", medicalService.getTotalPages(NUM_PER_PAGE));
 		model.addAttribute("statusMessage", getStatusMessage(status));
 		return "medical/list";
 	}
@@ -43,10 +54,19 @@ public class MedicalController {
 	@GetMapping("/add")
 	public String addGet(Model model) throws Exception {
 		System.out.println("MedicalController::addGet() start.");
-		model.addAttribute("title", "受診者名の追加");
+		List<Member> memberList = memberService.getMemberList();
+		List<Payee> payeeList = payeeService.getPayeeList();
 		Medical medical = new Medical();
 		medical.setAmount(0);
+		medical.setItemType(0);
+		medical.setClass1(0);
+		medical.setClass2(0);
+		medical.setClass3(0);
+		medical.setClass4(0);
+		model.addAttribute("title", "医療費の追加");
 		model.addAttribute("medical", medical);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("payeeList", payeeList);
 		return "medical/save";
 	}
 
@@ -58,19 +78,35 @@ public class MedicalController {
 		System.out.println("MedicalController::addPost() start.");
 		if(errors.hasErrors()) {
 			System.out.println("MedicalController::hasErrors(): " + errors.toString());
+			List<Member> memberList = memberService.getMemberList();
+			List<Payee> payeeList = payeeService.getPayeeList();
+			medical.setAmount(0);
+			medical.setItemType(1);
+			medical.setClass1(0);
+			medical.setClass2(0);
+			medical.setClass3(0);
+			medical.setClass4(0);
 			model.addAttribute("title", "医療費の追加");
+			model.addAttribute("medical", medical);
+			model.addAttribute("memberList", memberList);
+			model.addAttribute("payeeList", payeeList);
 			return "medical/save";
 		}
 
-		service.addMedical(medical);
+		medicalService.addMedical(medical);
+		System.out.println("MedicalController::addPost() done. ");
 		return "redirect:/medical?status=add";
 	}
 
 	@GetMapping("/edit/{id}")
 	public String editGet(@PathVariable Integer id, Model model) throws Exception {
 		System.out.println("MedicalController::editGet() start.");
+		List<Member> memberList = memberService.getMemberList();
+		List<Payee> payeeList = payeeService.getPayeeList();
 		model.addAttribute("title", "医療費情報の変更");
-		model.addAttribute("medical", service.getMedicalById(id));
+		model.addAttribute("medical", medicalService.getMedicalById(id));
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("payeeList", payeeList);
 		return "medical/save";
 	}
 
@@ -83,19 +119,24 @@ public class MedicalController {
 		System.out.println("MedicalController::editPost() start.");
 		if(errors.hasErrors()) {
 			System.out.println("MedicalController::editPost() hasErrors: " + errors.toString());
-			model.addAttribute("title", "受診者情報の変更");
+			List<Member> memberList = memberService.getMemberList();
+			List<Payee> payeeList = payeeService.getPayeeList();
+			model.addAttribute("title", "医療費の変更");
+			model.addAttribute("medical", medicalService.getMedicalById(id));
+			model.addAttribute("memberList", memberList);
+			model.addAttribute("payeeList", payeeList);
 			return "members/save";
 		}
 
 		medical.setId(id);
-		service.editMedical(medical);
+		medicalService.editMedical(medical);
 		return "redirect:/medical?status=edit";
 	}
 
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id, Model model) throws Exception {
 		System.out.println("MedicalController::delete() start.");
-		service.deleteMedical(id);
+		medicalService.deleteMedical(id);
 		return "redirect:/medical?status=delete";
 	}
 

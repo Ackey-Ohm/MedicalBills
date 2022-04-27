@@ -43,17 +43,31 @@ public class TotalServiceImpl implements TotalService {
 				System.out.println("TotalServiceImpl::getTotalAll() isTarget? true.");
 
 				for (Payee payee : payeeList) {			// かつ支払先ごとの集計
-					if (payee.getItemType() == 1) {		// まず、医療機関
+					if (payee.getItemType() == 0) {		// まず、医療機関
 						System.out.println("TotalServiceImpl::getTotalAll() payee:1=("
 								+ payee.getId()+ ")" + payee.getName());
 						Total total = totalDao.totalByName(member.getId(), payee.getId());
-						totalList.add(total);
+						if (total != null) {
+							System.out.println("TotalServiceImpl::getTotalAll() amount = "
+									+ total.getAmount());
+							if (/*total.getAmount() != null &&*/ total.getAmount() != 0) {
+								totalList.add(total);
+								System.out.println("TotalServiceImpl::getTotalAll() totalList.add()");
+							}
+						}
 					}
 					if (payee.getRelation() != null && payee.getRelation() != 0) { // 次に交通費
 						System.out.println("TotalServiceImpl::getTotalAll() payee:2=("
-								+ payee.getRelation()+ ")" + payee.getName());
+								+ payee.getRelation()+ ")" + payeeDao.selectById(payee.getRelation()).getName());
 						Total travelTotal = totalDao.totalByName(member.getId(), payee.getRelation());
-						totalList.add(travelTotal);
+						if (travelTotal != null) {
+							System.out.println("TotalServiceImpl::getTotalAll() amount = "
+								+ travelTotal.getAmount());
+							if (/*travelTotal.getAmount() != null &&*/ travelTotal.getAmount() != 0) {
+								totalList.add(travelTotal);
+								System.out.println("TotalServiceImpl::getTotalAll() totalList.add()");
+							}
+						}
 					}
 				}
 			} else {

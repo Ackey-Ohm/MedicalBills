@@ -6,6 +6,7 @@
 		SELECT
 			receipts.member as member,
 		    members.name as memberName,
+            receipts.payee as payee,
     		payees.name as payeeName,
 	    	sum(receipts.amount) as amount,
 			sum(receipts.class1) as class1,

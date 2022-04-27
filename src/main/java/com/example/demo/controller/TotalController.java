@@ -19,7 +19,8 @@ public class TotalController {
 	public String list(
 			Model model) throws Exception {
 		System.out.println("TotalController::list() start.");
-		model.addAttribute("toalList", service.getTotalAll());
+		model.addAttribute("totalList", service.getTotalAll());
+		System.out.println("TotalController::list() done.");
 		return "total/list";
 	}
 
