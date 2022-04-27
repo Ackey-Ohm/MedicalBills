@@ -41,7 +41,7 @@ public class MedicalServiceImpl implements MedicalService {
 			medical.setMemberName(memberDao.selectById(medical.getMember()).getName());
 			medical.setPayeeName(payeeDao.selectById(medical.getPayee()).getName());
 			String classString = "";
-			if (medical.getItemType() == 2 ) {
+			if (medical.getItemType() == 1 ) {
 				classString = "その他（交通費）";
 			} else {
 				classString += (medical.getClass1() != null && medical.getClass1() == 1) ? "医療費 " : "";
@@ -105,7 +105,7 @@ public class MedicalServiceImpl implements MedicalService {
 			medical.setMemberName(memberDao.selectById(medical.getMember()).getName());
 			medical.setPayeeName(payeeDao.selectById(medical.getPayee()).getName());
 			String classString = "";
-			if (medical.getItemType() == 2 ) {
+			if (medical.getItemType() == 1 ) {
 				classString = "その他（交通費）";
 			} else {
 				classString += (medical.getClass1() != null && medical.getClass1() == 1) ? "医療費 " : "";

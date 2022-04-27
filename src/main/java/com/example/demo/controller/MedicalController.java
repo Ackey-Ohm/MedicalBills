@@ -101,8 +101,12 @@ public class MedicalController {
 	@GetMapping("/edit/{id}")
 	public String editGet(@PathVariable Integer id, Model model) throws Exception {
 		System.out.println("MedicalController::editGet() start.");
+		List<Member> memberList = memberService.getMemberList();
+		List<Payee> payeeList = payeeService.getPayeeList();
 		model.addAttribute("title", "医療費情報の変更");
 		model.addAttribute("medical", medicalService.getMedicalById(id));
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("payeeList", payeeList);
 		return "medical/save";
 	}
 
@@ -115,7 +119,12 @@ public class MedicalController {
 		System.out.println("MedicalController::editPost() start.");
 		if(errors.hasErrors()) {
 			System.out.println("MedicalController::editPost() hasErrors: " + errors.toString());
-			model.addAttribute("title", "受診者情報の変更");
+			List<Member> memberList = memberService.getMemberList();
+			List<Payee> payeeList = payeeService.getPayeeList();
+			model.addAttribute("title", "医療費の変更");
+			model.addAttribute("medical", medicalService.getMedicalById(id));
+			model.addAttribute("memberList", memberList);
+			model.addAttribute("payeeList", payeeList);
 			return "members/save";
 		}
 
